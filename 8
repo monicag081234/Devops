@@ -1,0 +1,78 @@
+
+Ex. No: 8 INSTALL ANSIBLE AND CONFIGURE ANSIBLE ROLES AND WRITE PLAYBOOKS
+
+Date: [Date]
+
+AIM
+To install Ansible, configure Ansible roles, and write playbooks.
+
+PROCEDURE
+
+Step 1: Refresh the system’s package index:
+
+$ sudo apt update
+
+Step 2: Install Ansible via its PPA repository:
+
+$ sudo apt upgrade
+$ sudo apt install -y software-properties-common
+$ sudo add-apt-repository --yes --update ppa:ansible/ansible
+$ sudo apt install ansible
+
+Step 3: Navigate to the Ansible directory and check its version:
+
+$ cd /etc/ansible/
+$ ansible --version
+
+Step 4: Check Ansible directory content:
+
+$ ls -la
+$ sudo nano hosts
+
+Step 5: Create an Ansible role:
+
+$ ansible-galaxy init my-role
+$ ls
+
+Step 6: Create three Ansible roles:
+
+$ sudo ansible-galaxy init prerequisites
+$ sudo ansible-galaxy init PostgreSQL
+$ sudo ansible-galaxy init apache
+$ ls
+
+Step 7: Define tasks for each role:
+
+$ cd prerequisites/tasks/
+$ sudo nano main.yml
+Add:
+# tasks file for prerequisites
+- name: Install git
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+Repeat for PostgreSQL and apache roles.
+
+Step 8: Create a playbook file:
+
+$ sudo nano stack.yml
+Add:
+- hosts: localhost
+  become: true
+  roles:
+    - prerequisites
+    - PostgreSQL
+    - apache
+
+Step 9: Run the playbook:
+
+$ sudo ansible-playbook stack.yml
+
+Step 10: Check installation success:
+
+$ git --version
+$ apachectl -v
+
+RESULT
+The installation of Ansible, configuration of Ansible roles, and writing of playbooks have been successfully completed.
