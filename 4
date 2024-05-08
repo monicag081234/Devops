@@ -1,0 +1,97 @@
+Ex. No: 4 CREATE CI PIPELINE USING JENKINS
+
+Date: [Date]
+
+AIM: To create a Continuous Integration (CI) pipeline using Jenkins.
+
+PROCEDURE:
+
+STEP 1: Open the GitHub repository python-demoapp and fork it into your own account.
+
+STEP 2: Navigate to your GitHub account.
+
+STEP 3: Access the src directory, choose requirements.txt, and make necessary changes.
+
+STEP 4: Navigate to the build directory, select Dockerfile, and modify it as required.
+
+STEP 5: Replace the GitHub repository link in the provided makefile with your own repository link.
+
+STEP 6: Replace the GitHub username in the makefile and switch ghcr.io with docker.io.
+
+STEP 7: Open Jenkins, click on "New Item," name it, select "Pipeline," and click "OK."
+
+STEP 8: Configure the pipeline script:
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Python Version') {
+            steps {
+                sh "sudo apt update"
+                sh "sudo apt -y upgrade"
+                sh "sudo apt install python3.10-venv -y"
+                sh "python3 -v"
+            }
+        }
+        stage('Docker Version'){
+            steps{
+                sh "docker -v"
+            }
+        }
+        stage('Install Make'){
+            steps{
+                sh "sudo apt install make -y"
+                sh "sudo apt install make-guile -y"
+            }
+        }
+    }
+}
+STEP 9: Save the pipeline and click on "Build Now."
+
+STEP 10: Verify the build status in the Build history section.
+
+STEP 11: Go to "Dashboard" > "Manage Jenkins" > "Plugins," select "Available Plugins," search for "docker," and install the relevant plugins.
+
+STEP 12: Configure Docker on the AWS Ubuntu terminal using the provided commands.
+
+STEP 13: Create a Docker Hub account.
+
+STEP 14: Create a new pipeline in Jenkins, configure it, and set the max number of builds.
+
+STEP 15: In the Pipeline script, paste the following code:
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git changelog: false, poll: false, url:’[GitHub_URL]’
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh "make image"
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId:’[Credentials_ID]’, toolName:’[Tool_Name]’ ) {
+                        sh "make push"
+                    }
+                }
+            }
+        }
+    }
+}
+STEP 16: Generate the pipeline script for Git checkout and Docker registry credentials.
+
+STEP 17: Paste the generated pipeline script in the respective sections of the code.
+
+STEP 18: Click on "Build Now" for the pipeline.
+
+STEP 19: Verify the successful execution of the CI Pipeline.
+
+RESULT: The CI Pipeline has been successfully created in Jenkins.
