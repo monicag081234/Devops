@@ -1,0 +1,29 @@
+Ex. No: 5 CREATE A CD PIPELINE IN JENKINS AND DEPLOY IN CLOUD
+
+Date: [Date]
+
+AIM: To create a Continuous Deployment (CD) pipeline in Jenkins and deploy it in the Cloud.
+
+PROCEDURE:
+
+STEP 1: Navigate to Repositories > pythondemoapp > General. Find the Docker command and copy it.
+
+STEP 2: Go to your GitHub account, locate Containers, and copy the Docker command for future use.
+
+STEP 3: Integrate the following code into the existing CI Pipeline script:
+
+stage('Docker Deploy') {
+    steps {
+        script {
+            withDockerRegistry(credentialsId: 'dbc54abf-de2b-42b8-a0d2-f5539c9b8997', toolName: 'docker') {
+                sh "docker images"
+                sh "docker run -d --rm -it -p 80:5000 jayashriashokkumar28112003/python-webapp:latest" // change with yours
+            }
+        }
+    }
+}
+STEP 4: Click on Dashboard > python-webapp > Build Now
+
+STEP 5: To access the Python web app, copy and paste the public IP of the AWS instance and include port 5000 at the end of it. (For example: 41.204.111.57:5000)
+
+RESULT: The Continuous Deployment pipeline in Jenkins has been successfully configured, and the Python web app has been deployed in the Cloud.
