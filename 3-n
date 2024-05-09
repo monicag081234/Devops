@@ -1,0 +1,21 @@
+STEP 3: Installing Jenkins on the instance.
+1. Execute the following commands on the terminal to update the OS.
+
+$ clear
+$ sudo apt update2. Execute the following command to install Jenkins.
+$ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key 
+$ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \https://pkg.jenkins.io/debian-stable binary/ | sudo tee \/etc/apt/sources.list.d/jenkins.list > /dev/null
+$ sudo apt-get update
+$ sudo apt-get install fontconfig openjdk-17-jre
+$ sudo apt-get install Jenkins
+
+These commands can also be found at https://pkg.jenkins.io/debian-stable/ for Debian
+releases.
+
+3. The following commands will start Jenkins.
+$ sudo systemctl start Jenkins
+$ sudo systemctl enable Jenkins
+$ sudo systemctl status Jenkins
+
+4. Copy the public IP address found below the terminal and copy the address. Open a
+new tab, paste the IP address and add
