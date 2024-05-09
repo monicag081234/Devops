@@ -1,0 +1,88 @@
+package org.example;
+
+import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
+
+public class MainTest {
+
+@Test
+
+public void testMainMethod() {
+
+// Redirect standard output to capture console output
+
+ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+System.setOut(new PrintStream(outContent));
+
+// Call the main method
+
+Main.main(new String[]{});
+
+// Check if "Hello and welcome!" was printed
+
+assertEquals("Hello and welcome!", outContent.toString().trim());
+
+// Reset standard output
+
+System.setOut(System.out);
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+# Maven
+
+# Build your Java project and run tests with Apache Maven.
+
+# Add stepsthat analyze code, save build artifacts, deploy, and more:
+
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+
+- main
+
+pool:
+
+vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: Maven@3
+
+inputs:
+
+mavenPomFile: 'pom.xml'
+
+mavenOptions: '-Xmx3072m'
+
+javaHomeOption: 'JDKVersion'
+
+jdkVersionOption: '11'
+
+jdkArchitectureOption: 'x64'
+
+goals: 'clean test'
+
+- task: PublishTestResults@2
+
+inputs:
+
+testResultsFiles: '**/surefire-reports/TEST-*.xml'
+
+testRunTitle: 'JUnit Test Results
